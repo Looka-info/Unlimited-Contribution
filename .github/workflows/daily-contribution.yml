@@ -3,7 +3,7 @@ name: Daily Contribution
 
 on:
   schedule:
-    - cron: "0 0 * * *" # Every day at 00:00 UTC
+    - cron: "0 0 * * *"
   workflow_dispatch:
 
 permissions:
@@ -22,13 +22,55 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
 
-      - name: Update contribution file
+      - name: Update daily timer
         run: |
-          mkdir -p .github
-          echo "Last automated update: $(date -u)" > .github/daily-update.txt
+          python3 <<'PY'
+          from datetime import datetime, timedelta, timezone
+          from pathlib import Path
+
+          now = datetime.now(timezone.utc)
+          next_run = (now + timedelta(days=1)).replace(
+              hour=0, minute=0, second=0, microsecond=0
+          )
+
+          readme = Path("README.md")
+          content = readme.read_text(encoding="utf-8")
+
+          start = "<!-- DAILY-TIMER-START -->"
+          end = "<!-- DAILY-TIMER-END -->"
+
+          section = f"""<!-- DAILY-TIMER-START -->
+          ### ⏱️ Daily Contribution Timer
+
+          | Status | Information |
+          |---|---|
+          | 🟢 Automation | Active |
+          | 🕒 Last successful update | {now.strftime('%Y-%m-%d %H:%M:%S UTC')} |
+          | 📅 Next scheduled run | {next_run.strftime('%Y-%m-%d %H:%M UTC')} |
+          | ⏳ Countdown | Approximately 24 hours after this update |
+
+          > **Refresh notice:** This is a static README snapshot, not a live countdown. GitHub updates it after each successful workflow run. Refresh the page to see the latest values.
+
+          <!-- DAILY-TIMER-END -->"""
+
+          if start not in content or end not in content:
+              raise SystemExit("README timer markers are missing.")
+
+          before = content.split(start)[0]
+          after = content.split(end, 1)[1]
+
+          readme.write_text(
+              before + section + after,
+              encoding="utf-8"
+          )
+          PY
+
+      - name: Update maintenance file
+        run: |
+          echo "Last update: $(date -u)" > .github/daily-update.txt
 
       - name: Commit and push
         run: |
-          git add .github/daily-update.txt
-          git commit -m "chore: daily update" || exit 0
+          git add README.md .github/daily-update.txt
+          git commit -m "chore: update daily contribution timer" || exit 0
           git push
