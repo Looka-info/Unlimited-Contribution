@@ -24,9 +24,16 @@ Everything runs on GitHub's cloud infrastructure, so your computer does not need
 ## ⏱️ Daily Contribution Timer
 
 <!-- DAILY-TIMER-START -->
-### ⏳ Waiting for First Automated Update
+### ⏱️ Daily Contribution Timer
 
-The timer will initialize after the first successful GitHub Actions execution.
+| Status | Information |
+|---|---|
+| 🟢 Automation | Active |
+| 🕒 Last successful update | 2026-11-03 01:10:32 UTC |
+| 📅 Next scheduled run | 2026-11-04 00:00 UTC |
+| ⏳ Countdown | Approximately 24 hours after this update |
+
+> **Refresh notice:** This is a static README snapshot, not a live countdown. GitHub updates it after each successful workflow run. Refresh the page to see the latest values.
 
 <!-- DAILY-TIMER-END -->
 
