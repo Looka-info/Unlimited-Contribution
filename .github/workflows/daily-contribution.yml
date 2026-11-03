@@ -1,0 +1,34 @@
+
+name: Daily Contribution
+
+on:
+  schedule:
+    - cron: "0 0 * * *" # Every day at 00:00 UTC
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  contribution:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Configure Git
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+      - name: Update contribution file
+        run: |
+          mkdir -p .github
+          echo "Last automated update: $(date -u)" > .github/daily-update.txt
+
+      - name: Commit and push
+        run: |
+          git add .github/daily-update.txt
+          git commit -m "chore: daily update" || exit 0
+          git push
