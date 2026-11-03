@@ -5,19 +5,16 @@ Automated repository updates every 24 hours using GitHub Actions.
 ---
 
 <!-- DAILY-TIMER-START -->
-# ⏳ NEXT CONTRIBUTION
+### ⏱️ Daily Contribution Timer
 
-## `24:00:00`
-
-**COUNTDOWN INITIALIZING**
-
-| DETAILS | STATUS |
-|:---|:---|
+| Status | Information |
+|---|---|
 | 🟢 Automation | Active |
-| 🕒 Last Update | Waiting for first run |
-| 📅 Next Update | Scheduled daily |
-| 🔄 Frequency | Every 24 Hours |
-| 🌍 Timezone | UTC |
+| 🕒 Last successful update | 2026-11-03 01:14:21 UTC |
+| 📅 Next scheduled run | 2026-11-04 00:00 UTC |
+| ⏳ Countdown | Approximately 24 hours after this update |
+
+> **Refresh notice:** This is a static README snapshot, not a live countdown. GitHub updates it after each successful workflow run. Refresh the page to see the latest values.
 
 <!-- DAILY-TIMER-END -->
 
