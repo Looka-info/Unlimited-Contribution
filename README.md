@@ -1,25 +1,70 @@
-# GitHub Daily Contribution Automation
+# ⏱️ GitHub Daily Contribution Automation
 
-An automated GitHub Actions workflow that runs once every 24 hours, updates a repository maintenance file, and pushes a commit automatically.
+An automated GitHub Actions workflow that performs a scheduled repository maintenance update every 24 hours and synchronizes its execution information with this README.
 
-## Overview
+No local scripts, continuously running applications, or manual commits are required.
 
-This project uses **GitHub Actions** to automate a daily repository update without requiring your computer to stay powered on.
+---
 
-Once configured, GitHub handles the entire process in the cloud.
+## 🚀 Overview
 
-## How It Works
+This project uses GitHub Actions to automate a daily repository update.
 
-The workflow follows this sequence:
+Every day, GitHub automatically:
 
-1. **Scheduled Trigger** — GitHub Actions starts the workflow every day at 00:00 UTC.
-2. **Repository Checkout** — The latest repository version is downloaded into the runner.
-3. **Git Configuration** — Git is configured with the GitHub Actions bot identity.
-4. **File Update** — The workflow updates `.github/daily-update.txt` with the current UTC timestamp.
-5. **Commit Creation** — Git creates a commit containing the updated file.
-6. **Push to GitHub** — The new commit is pushed to the repository.
+- Starts the scheduled workflow.
+- Checks out the latest repository version.
+- Updates the daily maintenance timestamp.
+- Synchronizes the README countdown information.
+- Creates a Git commit.
+- Pushes the changes to GitHub.
 
-## Workflow Architecture
+Everything runs on GitHub's cloud infrastructure, so your computer does not need to remain switched on.
+
+## ⏱️ Daily Contribution Timer
+
+<!-- DAILY-TIMER-START -->
+### ⏳ Waiting for First Automated Update
+
+The timer will initialize after the first successful GitHub Actions execution.
+
+<!-- DAILY-TIMER-END -->
+
+> **Refresh limitation:** GitHub README files are static Markdown documents. The countdown information updates when the workflow successfully runs, not continuously every second. Refresh the README to view the latest information.
+
+## ⚙️ Automation Schedule
+
+| Configuration | Value |
+|---|---|
+| Execution frequency | Every 24 hours |
+| Scheduled time | 00:00 UTC |
+| Pakistan time | 05:00 AM |
+| Automation platform | GitHub Actions |
+| Execution environment | Ubuntu Latest |
+| Commit method | Automated Git commit |
+| Manual execution | Supported |
+
+The workflow uses the following cron expression:
+
+```cron
+0 0 * * *
+```
+
+GitHub schedules use UTC. Actual execution may be delayed during periods of high platform load.
+
+## 🔄 How It Works
+
+The automation follows a simple sequence:
+
+1. **Scheduled Trigger:** GitHub Actions starts the workflow at its scheduled time.
+2. **Repository Checkout:** The latest repository version is retrieved.
+3. **Git Configuration:** The GitHub Actions bot identity is configured.
+4. **Timestamp Update:** The maintenance file receives the latest execution timestamp.
+5. **README Synchronization:** The last execution and next scheduled execution are written into the README.
+6. **Commit Creation:** Git creates a commit containing the updated files.
+7. **Push:** Changes are pushed to the GitHub repository.
+
+### Workflow Architecture
 
 ```text
        GitHub Actions Scheduler
@@ -34,7 +79,10 @@ The workflow follows this sequence:
           Configure Git
                  |
                  v
-        Update Maintenance File
+        Update README Timer
+                 |
+                 v
+       Update Maintenance File
                  |
                  v
           Create Commit
@@ -44,87 +92,85 @@ The workflow follows this sequence:
                  |
                  v
          Repository Updated
+                 |
+                 v
+          Next 24-Hour Cycle
 ```
 
-## Schedule
-
-| Configuration | Value |
-|---|---|
-| Execution frequency | Every 24 hours |
-| Cron expression | `0 0 * * *` |
-| UTC execution time | 00:00 |
-| Pakistan time | 05:00 AM |
-| Execution environment | Ubuntu Latest |
-| Automation platform | GitHub Actions |
-| Manual execution | Supported |
-
-**Note:** GitHub scheduled workflows use UTC and may experience execution delays during periods of high platform load.
-
-## Project Structure
+## 📁 Project Structure
 
 ```text
 repository/
 │
-└── .github/
-    ├── workflows/
-    │   └── daily-contribution.yml
-    │
-    └── daily-update.txt
+├── .github/
+│   ├── workflows/
+│   │   └── daily-contribution.yml
+│   │
+│   └── daily-update.txt
+│
+└── README.md
 ```
 
-## Installation
+## 🛠️ Installation
 
-### 1. Create the workflow
+### 1. Create the Workflow
 
 Create the following file:
 
 `.github/workflows/daily-contribution.yml`
 
-Add the workflow configuration.
+Add the GitHub Actions workflow configuration.
 
-### 2. Configure permissions
+### 2. Configure Permissions
 
 Navigate to:
 
 `Repository → Settings → Actions → General`
 
-Under Workflow permissions, select:
+Under Workflow permissions, enable:
 
 **Read and write permissions**
 
 Save your changes.
 
-### 3. Activate automation
+### 3. Add README Timer Markers
 
-Push the workflow file to your default branch.
+Add the following markers to your README:
 
-GitHub Actions will automatically schedule future executions.
+```markdown
+<!-- DAILY-TIMER-START -->
+<!-- DAILY-TIMER-END -->
+```
 
-## Manual Execution
+The workflow uses these markers to locate and update the timer section without overwriting the rest of your README.
 
-You can also trigger the workflow manually:
+### 4. Activate Automation
+
+Commit and push the workflow file to your repository's default branch.
+
+The first successful execution will initialize the timer information.
+
+## ▶️ Manual Execution
+
+The workflow also supports manual execution.
 
 1. Open your GitHub repository.
-2. Navigate to the Actions tab.
-3. Select Daily Contribution.
-4. Click Run workflow.
+2. Navigate to the **Actions** tab.
+3. Select **Daily Contribution**.
+4. Click **Run workflow**.
 
-## Requirements
+This allows you to trigger a maintenance update without waiting for the scheduled execution.
 
-- A GitHub account.
-- A repository with GitHub Actions enabled.
-- Write permissions for the workflow.
-- The workflow file committed to the repository's default branch.
-
-## Important Notes
+## ⚠️ Important Notes
 
 - Your computer does not need to be running.
-- GitHub Actions executes the workflow independently.
-- Every successful run updates the maintenance timestamp.
-- A commit is created only when the file changes.
-- Scheduled workflows are not guaranteed to execute at an exact time.
-- GitHub contribution visibility depends on contribution eligibility and repository settings.
+- GitHub Actions executes independently in the cloud.
+- The README countdown is a periodically updated snapshot, not a live JavaScript timer.
+- Scheduled workflows may experience delays.
+- The workflow requires repository write permissions.
+- Bot-authored commits generally do not count as personal GitHub contributions.
+- Personal contribution visibility depends on GitHub's contribution eligibility rules.
 
-## License
+## 📜 License
 
-MIT License — use and modify this workflow freely.
+MIT License. You are free to use, modify, and distribute this automation workflow.
